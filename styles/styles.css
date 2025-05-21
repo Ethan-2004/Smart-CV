@@ -1,0 +1,66 @@
+页面背景动画
+body {
+    background: linear-gradient(120deg, #f0f4ff, #dbe5ff);
+    background-size: 200% 200%;
+    animation: backgroundMove 10s ease infinite;
+}
+
+@keyframes backgroundMove {
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}
+}
+
+/* 页面容器 */
+.container {
+    margin-top: 5vh;
+    text-align: center;
+    padding: 2rem 2rem;
+    border-radius: 20px;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: rgba(255, 255, 255, 0.92);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* 标题 */
+h1 {
+    font-size: 2.8rem;
+    font-weight: bold;
+    color: #1a1a1a;
+}
+
+/* 文字段落 */
+p {
+    font-size: 1.2rem;
+    color: #333333;
+    line-height: 1.8;
+    margin-bottom: 2.5rem;
+}
+
+/* 按钮样式 */
+.stButton > button {
+    background-color: #ffffff;
+    color: #2c5364;
+    font-size: 1.1rem;
+    font-weight: bold;
+    padding: 0.75rem 2.5rem;
+    border-radius: 30px;
+    border: none;
+    transition: all 0.3s ease;
+    box-shadow: 0px 4px 15px rgba(0,0,0,0.2);
+}
+
+.stButton > button:hover {
+    background-color: #eeeeee;
+    transform: scale(1.05);
+}
+/*  */
+/* 右上角退出按钮 */
+.header-right {
+    position: absolute;
+    top: 1rem;
+    right: 2rem;
+    z-index: 9999;
+}
