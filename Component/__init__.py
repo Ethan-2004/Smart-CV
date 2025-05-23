@@ -19,3 +19,4 @@ from .ResumeManeger.resume_parser import *
 from .Myinfo.myinfo_ops_mysql import *
 from .JOB_manage.job_manageops_mysql import *
 from .JOB_manage.import_json  import *
+from .Analysis_record.analysis_recoreds_ops import *

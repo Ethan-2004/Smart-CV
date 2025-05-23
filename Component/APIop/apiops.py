@@ -1,5 +1,5 @@
 # import sqlite3
-# from utils.secret import *
+# from oputils.secret import *
 
 # DB_PATH = "jobs.db"
 

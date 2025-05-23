@@ -15,7 +15,7 @@ if not cookies.ready():
     st.stop()
 
 # MySQL 配置
-from utils.db_config import DB_CONFIG
+from oputils.db_config import DB_CONFIG
 
 def get_mysql_connection():
     return mysql.connector.connect(**DB_CONFIG)

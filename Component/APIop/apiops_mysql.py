@@ -1,6 +1,6 @@
 import mysql.connector
-from utils.db_config import DB_CONFIG
-from utils.secret import *
+from oputils.db_config import DB_CONFIG
+from oputils.secret import *
 
 def get_connection():
     return mysql.connector.connect(
@@ -69,3 +69,16 @@ def delete_analysis_api(id):
     conn.commit()
     cursor.close()
     conn.close()
+
+def get_all_models(phonenumber):
+    conn = get_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("""
+        SELECT api_name, api_url, api_key
+        FROM analysis_api
+        WHERE phonenumber = %s
+        ORDER BY created_at DESC
+    """, (phonenumber,))
+    results = cursor.fetchall()
+    cursor.close()
+    return results

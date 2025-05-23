@@ -1,6 +1,6 @@
 import mysql.connector
 from datetime import datetime
-from utils.db_config import DB_CONFIG
+from oputils.db_config import DB_CONFIG
 
 def get_connection():
     return mysql.connector.connect(

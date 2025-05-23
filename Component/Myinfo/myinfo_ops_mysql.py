@@ -1,7 +1,7 @@
 import mysql.connector
 from datetime import datetime
 
-from utils.db_config import DB_CONFIG
+from oputils.db_config import DB_CONFIG
 
 def get_mysql_connection():
     return mysql.connector.connect(**DB_CONFIG)
@@ -21,14 +21,27 @@ def get_user_resumes(phonenumber):
 def get_resume_analysis_by_number(phonenumber):
     conn = get_mysql_connection()
     c = conn.cursor()
+
     c.execute("""
-        SELECT score, analysis_time, outcome, state FROM resume_analysis 
-        WHERE phonenumber=%s
+        SELECT 
+            r.resume_name,
+            j.job_name,
+            ra.overall_score,
+            ra.analysis_time,
+            ra.json_analysis_result,
+            ra.status
+        FROM resume_analysis ra
+        LEFT JOIN resumes r ON ra.resume_id = r.id
+        LEFT JOIN jobs j ON ra.job_id = j.id
+        WHERE ra.phonenumber = %s
+        ORDER BY ra.analysis_time DESC
     """, (phonenumber,))
+
     analysis = c.fetchall()
     c.close()
     conn.close()
     return analysis
+
 
 def get_jobs_summary():
     conn = get_mysql_connection()

@@ -1,7 +1,7 @@
 # file: Component.py
 from sqlalchemy import create_engine, Table, Column, Integer, String, Text, MetaData, DateTime
 from datetime import datetime
-from utils.db_config import DB_CONFIG
+from oputils.db_config import DB_CONFIG
 
 DB_URI = f"mysql+pymysql://{DB_CONFIG['user']}:{DB_CONFIG['password']}@{DB_CONFIG['host']}:{DB_CONFIG.get('port', 3306)}/{DB_CONFIG['database']}?charset=utf8mb4"
 

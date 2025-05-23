@@ -1,6 +1,7 @@
+import json
 import mysql.connector
 from datetime import datetime
-from utils.db_config import DB_CONFIG
+from oputils.db_config import DB_CONFIG
 
 def get_mysql_connection():
     return mysql.connector.connect(
@@ -12,16 +13,16 @@ def get_mysql_connection():
         auth_plugin='mysql_native_password'  # 视具体环境可删
     )
 
-def insert_resume(phonenumber, resume_name, save_path, content_summary,
-                school, education, expected_salary, age, region, gender, state, file_hash):
+def insert_resume(phonenumber, resume_name, save_path, upload_date, content_summary,
+                school, education, expected_salary, age, region, gender, state, file_hash,json_resume_data):
     conn = get_mysql_connection()
     c = conn.cursor()
     c.execute("""
-        INSERT INTO resumes (phonenumber, resume_name, save_path, content_summary,
-            school, education, expected_salary, age, region, gender, state, file_hash)
-        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-    """, (phonenumber, resume_name, save_path, content_summary,
-        school, education, expected_salary, age, region, gender, state, file_hash))
+        INSERT INTO resumes (phonenumber, resume_name,  save_path, upload_date, content_summary,
+            school, education, expected_salary, age, region, gender, state, file_hash,json_resume_data)
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+    """, (phonenumber, resume_name, save_path,upload_date,  content_summary,
+        school, education, expected_salary, age, region, gender, state, file_hash,json_resume_data))
     conn.commit()
     c.close()
     conn.close()
@@ -70,3 +71,15 @@ def check_resume_by_hash(file_hash):
     c.close()
     conn.close()
     return count > 0
+
+def update_json_resume_data(resume_id, structured_resume):
+    conn = get_mysql_connection()
+    cursor = conn.cursor()
+    cursor.execute("""
+        UPDATE resumes
+        SET json_resume_data = %s
+        WHERE id = %s
+    """, (json.dumps(structured_resume, ensure_ascii=False), resume_id))
+    conn.commit()
+    cursor.close()
+    conn.close()
