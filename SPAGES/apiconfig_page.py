@@ -1,7 +1,8 @@
 import streamlit as st
 from datetime import datetime
 import Component as co
-
+import streamlit as st
+from oputils.config_utils import get_model_config, update_model_config
 def mask_api_key(api_key: str) -> str:
     if len(api_key) <= 6:
         return "*" * len(api_key)
@@ -18,8 +19,21 @@ def api_config_page(phonenumber):
     # 读取已有API配置
     api_list = co.get_analysis_api(phonenumber)
 
+
+    st.subheader("🧩 模型配置")
+    # ➤ 从数据库 API 配置中构建可选项
+    api_options = {f"{api['api_name']}": api for api in api_list}
+    selected_label = st.selectbox("选择默认模型 API 配置", list(api_options.keys()))
+    selected_api = api_options[selected_label]
+    if  selected_label:
+        api_url = selected_api["api_url"]
+        api_key = selected_api["api_key"]
+        model_name = selected_api["api_name"]
+        update_model_config(model_name, api_url, api_key)
+    st.write("---")
+    
     # 添加新API配置表单
-    with st.expander("➕ 添加新的API配置", expanded=True):
+    with st.expander("➕ 添加新的API配置", expanded=False):
         with st.form("add_api_form"):
             api_name = st.text_input("API名称", key="add_api_name")
             api_url = st.text_input("API地址", key="add_api_url")
@@ -56,4 +70,8 @@ def api_config_page(phonenumber):
                 co.delete_analysis_api(api["id"])
                 st.success(f"已删除 API 配置：{api['api_name']}")
                 st.rerun()
+
+
+    
+
 

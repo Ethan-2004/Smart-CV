@@ -25,11 +25,17 @@ def myinfo_page(phonenumber,username):
 
     # 2. 简历分析分数统计及图表
     analysis = co.get_resume_analysis_by_number(phonenumber)
+
     if analysis:
         st.subheader("📊 简历分析结果统计")
 
-        df_analysis = pd.DataFrame(analysis, columns=["分数", "分析时间", "结果", "状态"])
+        df_analysis = pd.DataFrame(analysis, columns=[
+            "简历名称", "职位名称",
+            "分数", "分析时间", "结果", "状态"
+        ])
+
         st.dataframe(df_analysis)
+
 
         # 分数分布图
         import matplotlib.pyplot as plt
@@ -52,12 +58,20 @@ def myinfo_page(phonenumber,username):
         st.info("暂无简历分析数据。")
 
     # 3. 职位分类统计图表
+    st.write("---")
+    st.subheader("💼 职位分类统计")
+    page1,page2=st.columns([1,1])
     job_cat_count, total_jobs = co.get_jobs_summary()
-    if job_cat_count:
-        st.subheader("💼 职位分类统计")
-        df_jobs = pd.DataFrame(job_cat_count, columns=["职位分类", "数量"])
-        st.dataframe(df_jobs)
+    with page1:  
+        if job_cat_count:
+            
+            df_jobs = pd.DataFrame(job_cat_count, columns=["职位分类", "数量"])
+            st.dataframe(df_jobs)
 
+            
+        else:
+            st.info("暂无职位数据。")
+    with page2:
         import matplotlib.pyplot as plt
         plt.rcParams['font.sans-serif'] = ['SimHei']  # 设置中文字体为黑体
         plt.rcParams['axes.unicode_minus'] = False   
@@ -69,5 +83,3 @@ def myinfo_page(phonenumber,username):
         plt.ylabel("职位数量")
         plt.xticks(rotation=45)
         st.pyplot(plt)
-    else:
-        st.info("暂无职位数据。")
