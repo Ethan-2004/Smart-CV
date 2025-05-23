@@ -1,0 +1,59 @@
+cookie:
+  expiry_days: 30
+  key: 2|7b234b9c|478e1807aaed52cb2be64c8c40044556|1747649926
+  name: _streamlit_xsrf
+credentials:
+  usernames:
+    admin:
+      email: admin@example.com
+      failed_login_attempts: 1
+      logged_in: false
+      name: admin
+      password: $2b$12$IkJsTRWe7EqLtmZH/1CYTOZKeTKmtonpJ222h3X3esS1KnVymBxXy
+      roles:
+      - admin
+      - editor
+      - viewer
+    ben:
+      email: rusuanjun_2022@qq.com
+      first_name: zhang
+      last_name: haisheng
+      logged_in: false
+      password: $2b$12$BDMVdKNcaUh46RdG0ilzi.OtFiMDz6sE8kBkzBKzSohXjIcJr7tCW
+      password_hint: four and one
+      roles: null
+    bens:
+      email: 19159021271@163.com
+      first_name: bens
+      last_name: sawe
+      logged_in: false
+      password: $2b$12$kbeeiqCBGSEpy7vVT2pMR.n/uk5aZV/hY8kWqGA4ELbS.ajbbi/ju
+      password_hint: sssa
+      roles: null
+      phonenumber: 13800138000
+    qwe:
+      email: qwe@123.com
+      first_name: qwe
+      last_name: qwe
+      logged_in: false
+      password: $2b$12$ok4bVw7na4GHLVGSLvlpo.eGGWjeDWsKsEXedvcy2QoOazPXlhwXm
+      password_hint: qqq
+      roles: null
+    sse:
+      email: ww@qq.com
+      first_name: wwe
+      last_name: ww
+      logged_in: false
+      password: $2b$12$P2GfcySCoYz7P78ZcNeEZOiHy7YLMlqBBG6iRK8ReVA5ZE5tWp9ZO
+      password_hint: ss
+      roles: null
+    zhs:
+      email: ss@qq.com
+      first_name: zhang
+      last_name: sse
+      logged_in: false
+      password: $2b$12$MgesK2lRMFSGpy2hhp9gDuGQ4tci45g9GLAuwdDj.W7YC7RyNbmna
+      password_hint: save
+      roles: null
+pre-authorized:
+  emails: null
