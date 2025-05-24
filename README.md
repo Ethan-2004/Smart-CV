@@ -73,7 +73,7 @@
 
 | 文件名                                  | 说明                                      |
 | ------------------------------------ | --------------------------------------- |
-| `main.py`                            | 主程序入口（建议确认是否通过 `start_streamlit.sh` 启动） |
+| `main.py`                            | 主程序入口 |
 | `jobs.db`                            | 本地 SQLite 数据库文件（用于早期测试）                 |
 | `init_mysql.py`                      | 初始化 MySQL 数据库的脚本                        |
 | `zhipuapi.py`                        | 调用智谱大模型 API 的模块                         |
@@ -150,6 +150,8 @@ pip install -r requirements.txt
 # 3. 运行项目
 streamlit run main.py
 ```
+
+---
 
 ### ✅ 模块说明  
 
