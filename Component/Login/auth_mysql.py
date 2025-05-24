@@ -81,7 +81,7 @@ def login():
             st.error("用户名或密码错误")
 
 def auto_login():
-    st.write("当前 Cookie 内容：", dict(cookies))
+    # st.write("当前 Cookie 内容：", dict(cookies))
     session_user = cookies.get("session_user")
     if session_user:
         conn = get_mysql_connection()

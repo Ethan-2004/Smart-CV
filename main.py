@@ -1,9 +1,22 @@
 # main.py
 
 import streamlit as st
+from streamlit_lottie import st_lottie
+from streamlit_option_menu import option_menu
 
+# ------------------- 自定义模块导入 -------------------
+from SPAGES import (
+    display_homepage,
+    display_resume_upload,
+    display_analysis,
+    myinfo_page,
+    api_config_page,
+    job_manager_page
+)
 from SPAGES.HR_insights_page import hr_insights_page
-
+from DB.database import init_db
+from Component.Login.auth_mysql import auto_login, login, logout, register_user
+from Component.Display.style_load import load_lottie, load_css
 
 # ------------------- 页面基础设置 -------------------
 st.set_page_config(
@@ -13,37 +26,15 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-from streamlit_lottie import st_lottie
-from streamlit_option_menu import option_menu
-
-# 自定义模块导入
-from SPAGES import (
-    display_homepage,
-    display_resume_upload,
-    display_analysis,
-    myinfo_page,
-    api_config_page,
-    job_manager_page
-)
-from DB.database import init_db
-from Component.Login.auth_mysql import auto_login, login, logout, register_user
-from Component.Display.style_load import load_lottie, load_css
-
-
-# 加载页面样式和动画
-
+# ------------------- 初始化资源 -------------------
+init_db()
 animation = load_lottie("./assets/hello_diplay.json")
 
-# 初始化数据库
-init_db()
-
-# 初始化页面状态
 if "page" not in st.session_state:
     st.session_state.page = "intro"
 
-
-
 # ------------------- 页面逻辑控制 -------------------
+
 # 1. 欢迎引导页
 if st.session_state.page == "intro":
     st.write("---")
@@ -81,49 +72,31 @@ elif st.session_state.page == "login":
 # 3. 主页面（已登录）
 elif st.session_state.page == "home":
 
-
-    # 顶部右上角退出登录按钮
+    # 顶部退出按钮
     st.markdown('<div class="header-right">', unsafe_allow_html=True)
-    col_logout = st.columns([8, 2])[1]
-    with col_logout:
-        if st.button("退出登录", key="logout_btn"):
-            logout()
-            st.session_state.page = "intro"
-            st.rerun()
+    if st.columns([8, 2])[1].button("退出登录", key="logout_btn"):
+        logout()
+        st.session_state.page = "intro"
+        st.rerun()
     st.markdown('</div>', unsafe_allow_html=True)
 
     # 左侧导航栏
     with st.sidebar:
-        # animation = load_lottie("./assets/hello_diplay.json")
-        # st.logo("./assets/logo.png")
-        logo_animation = load_lottie("./assets/ai_resume.json")
-        st_lottie(logo_animation, height=90)
+        st_lottie(load_lottie("./assets/ai_resume.json"), height=90)
         selected = option_menu(
             "导航栏",
-            ["首页", "职位管理","简历管理", "简历分析", "HR","我的主页", "API配置"],
-            icons=['house', 'person-badge','upload', 'search', 'person-workspace','person-circle', 'gear'],
+            ["首页", "职位管理", "简历管理", "简历分析", "HR", "我的主页", "API配置"],
+            icons=['house', 'person-badge', 'upload', 'search', 'person-workspace', 'person-circle', 'gear'],
             menu_icon="cast",
             default_index=0
         )
         
-    # 获取当前登录手机号（若有）
-    # if "user_info" in st.session_state:
-    #     for key, value in st.session_state.user_info.items():
-    #         st.write(f"{key} : {value}")
-    # else:
-    #     st.warning("尚未登录或用户信息未保存")
-
-    if "user_info" in st.session_state:
-        phonenumber = st.session_state.user_info["phonenumber"]
-        username = st.session_state.user_info["username"]
-        # st.write("当前用户手机号：", phonenumber)
-
-            # 左下角展示个人信息
-        with st.sidebar:
-            st.markdown("---", unsafe_allow_html=True)
+        if "user_info" in st.session_state:
             load_css("./styles/sidebar_profile.css")
-            st.markdown(
-                f"""
+            username = st.session_state.user_info["username"]
+            phonenumber = st.session_state.user_info["phonenumber"]
+            # st.markdown("---",) unsafe_allow_html=True)
+            st.markdown(f"""
                 <div class="profile-box">
                     <div class="profile-header">
                         <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png">
@@ -131,40 +104,29 @@ elif st.session_state.page == "home":
                     </div>
                     <div class="profile-phone">📱 {phonenumber}</div>
                 </div>
-            """,
-                unsafe_allow_html=True
-            )
+            """, unsafe_allow_html=True)
 
     # 页面跳转逻辑
+    phonenumber = st.session_state.user_info.get("phonenumber", None) if "user_info" in st.session_state else None
+    username = st.session_state.user_info.get("username", None) if "user_info" in st.session_state else None
+
     if selected == "首页":
-        # st.warning(phonenumber)
         display_homepage()
-    
+
     elif selected == "职位管理":
-        if phonenumber:
-            job_manager_page()
-        else:
-            st.warning("尚未登录或用户信息未保存")
+        job_manager_page() if phonenumber else st.warning("尚未登录或用户信息未保存")
 
     elif selected == "简历管理":
-        if phonenumber:
-            display_resume_upload(phonenumber)
-        else:
-            st.warning("请先登录后使用该功能。")
+        display_resume_upload(phonenumber) if phonenumber else st.warning("请先登录后使用该功能。")
 
     elif selected == "简历分析":
-        if phonenumber:
-            display_analysis(phonenumber,username)
-        else:
-            st.warning("请先登录后使用该功能。")
-            
+        display_analysis(phonenumber, username) if phonenumber else st.warning("请先登录后使用该功能。")
+
     elif selected == "HR":
         hr_insights_page(phonenumber)
-        
+
     elif selected == "我的主页":
-        myinfo_page(phonenumber,username)
+        myinfo_page(phonenumber, username)
 
     elif selected == "API配置":
         api_config_page(phonenumber)
-    
-

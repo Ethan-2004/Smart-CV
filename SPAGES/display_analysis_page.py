@@ -85,7 +85,7 @@ def display_analysis(phonenumber, username):
                 st.success(f"已选模型：{api_name}")
 
         if selected_job_label and selected_model_label:
-            st.write(f"简历路径：{resume[4]}")
+            st.success(f"简历路径：{resume[4]}")
 
         # 修改返回语句，增加 job_data_row
         return api_name, api_url, decode_apikey, job_data, choose_job, job_data_row
@@ -235,4 +235,4 @@ def display_analysis(phonenumber, username):
             if st.button("确认删除记录"):
                 co.delete_analysis(del_id)
                 st.success("删除成功")
-                st.experimental_rerun()
+                st.rerun()
