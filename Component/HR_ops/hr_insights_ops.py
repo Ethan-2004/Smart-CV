@@ -12,7 +12,7 @@ def get_mysql_connection():
         port=DB_CONFIG.get('port', 3306)
     )
 
-# ——— 绩效评估 ———
+
 def save_performance(phonenumber: str, resume_id: int, analysis_id: int, scores: dict, summary: str):
     conn = get_mysql_connection()
     cur = conn.cursor()
@@ -54,7 +54,7 @@ def get_performance_by_user(phonenumber: str, resume_id: int = None):
     conn.close()
     return rows
 
-# ——— 培训推荐 ———
+
 def save_training(phonenumber: str, resume_id: int, analysis_id: int, content: str):
     conn = get_mysql_connection()
     cur = conn.cursor()
@@ -82,7 +82,7 @@ def get_training_by_analysis(analysis_id: int):
     conn.close()
     return row
 
-# ——— 留存预测 ———
+
 def save_retention(phonenumber: str, resume_id: int, analysis_id: int, risk_level: str, details: dict):
     conn = get_mysql_connection()
     cur = conn.cursor()

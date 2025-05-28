@@ -10,8 +10,6 @@ def get_connection():
         database=DB_CONFIG['database'],
         port=DB_CONFIG.get('port', 3306)
     )
-
-# 添加单个职位
 def add_job(job_name, job_category, job_description):
     conn = get_connection()
     cursor = conn.cursor()
@@ -24,7 +22,6 @@ def add_job(job_name, job_category, job_description):
     cursor.close()
     conn.close()
 
-# ✅ 添加多个职位（批量导入）
 def add_jobs_batch(job_list):
     conn = get_connection()
     cursor = conn.cursor()
@@ -49,7 +46,6 @@ def add_jobs_batch(job_list):
     conn.close()
     return len(values)
 
-# 查询所有职位
 def get_all_jobs():
     conn = get_connection()
     cursor = conn.cursor()
@@ -59,7 +55,6 @@ def get_all_jobs():
     conn.close()
     return rows
 
-# 根据ID查询单个职位
 def get_job_by_id(job_id):
     conn = get_connection()
     cursor = conn.cursor()
@@ -69,7 +64,6 @@ def get_job_by_id(job_id):
     conn.close()
     return row
 
-# 更新职位
 def update_job(job_id, job_name, job_category, job_description):
     conn = get_connection()
     cursor = conn.cursor()
@@ -82,7 +76,6 @@ def update_job(job_id, job_name, job_category, job_description):
     cursor.close()
     conn.close()
 
-# 删除职位
 def delete_job(job_id):
     conn = get_connection()
     cursor = conn.cursor()
@@ -91,11 +84,10 @@ def delete_job(job_id):
     cursor.close()
     conn.close()
 
-# 删除所有
 def delete_all_jobs():
     conn = get_connection()
     cursor = conn.cursor()
-    cursor.execute("DELETE FROM jobs")  # 删除所有职位
+    cursor.execute("DELETE FROM jobs")  
     conn.commit()
     cursor.close()
     conn.close()

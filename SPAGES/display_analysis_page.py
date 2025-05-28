@@ -186,7 +186,7 @@ def display_analysis(phonenumber, username):
                 towrite.seek(0)
                 st.download_button("点击下载 Excel 文件", towrite, file_name="analysis.xlsx")
 
-        # 图表展示
+
         plt.rcParams['font.sans-serif'] = ['SimHei']
         plt.rcParams['axes.unicode_minus'] = False
         pic1, pic2, pic3 = st.columns([1, 1, 1])

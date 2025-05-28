@@ -1,4 +1,3 @@
-# file: Component.py
 from sqlalchemy import create_engine, Table, Column, Integer, String, Text, MetaData, DateTime
 from datetime import datetime
 from oputils.db_config import DB_CONFIG
@@ -16,8 +15,6 @@ jobs_table = Table(
     Column('job_description', Text),
     Column('created_at', DateTime)
 )
-
-# ✅ SQLAlchemy 批量插入
 def add_jobs_batch_sqlalchemy(job_list):
     conn = engine.connect()
     now = datetime.now()

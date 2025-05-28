@@ -61,7 +61,6 @@ ITERATIONS = 100_000
 # 哈希算法
 ALGORITHM = 'sha256'
 
-# 加密密码（返回 base64 编码的字符串：salt$hash）
 def hash_password(password: str) -> str:
     salt = os.urandom(SALT_SIZE)
     pwd_hash = hashlib.pbkdf2_hmac(ALGORITHM, password.encode(), salt, ITERATIONS)

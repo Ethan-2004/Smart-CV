@@ -10,7 +10,7 @@ def get_mysql_connection():
         password=DB_CONFIG['password'],
         database=DB_CONFIG['database'],
         port=DB_CONFIG.get('port', 3306),
-        auth_plugin='mysql_native_password'  # 视具体环境可删
+        auth_plugin='mysql_native_password'  
     )
 
 def insert_resume(phonenumber, resume_name, save_path, upload_date, content_summary,

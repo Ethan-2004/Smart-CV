@@ -96,24 +96,24 @@ def display_resume_upload(phonenumber):
             except Exception as e:
                 st.error(f"解析失败：{file.name}，错误：{e}")
 
-    # 显示上传记录
+
     st.subheader("📑 上传记录")
     rows = co.get_all_resumes(phonenumber)
     if not rows:
         st.info("暂无简历上传记录")
         return
 
-    # 假设 rows 是一个列表，每个元素是一个 tuple 或 list，最后一项是 dict
+
     rows_str = []
     for row in rows:
-        # 复制行数据，结构化简历字段转成字符串
+
         row_list = list(row)
-        # 结构化简历一般是最后一项
+
         if isinstance(row_list[-1], dict):
             row_list[-1] = json.dumps(row_list[-1], ensure_ascii=False)
         row_str = tuple(row_list)
         rows_str.append(row_str)
-    # DataFrame 字段需与数据库字段顺序对应
+
     df = pd.DataFrame(rows, columns=[
         "ID", "手机号", "简历名", "文件哈希", "保存路径", "上传时间", "内容摘要",
         "学校", "学历", "期望薪资", "年龄", "地区", "性别", "状态", "结构化简历"

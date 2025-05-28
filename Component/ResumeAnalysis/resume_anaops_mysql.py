@@ -2,8 +2,6 @@ import json
 import mysql.connector
 from datetime import datetime
 
-#/oputils/db_config.py
-
 DB_CONFIG = {
     'host': 'localhost',
     'user': 'root',
@@ -19,8 +17,6 @@ def get_mysql_connection():
         database=DB_CONFIG['database'],
         port=DB_CONFIG.get('port', 3307),
     )
-
-# resume_anaops_mysql.py 中添加
 def get_resume_json_by_resume_id(resume_id):
     conn = get_mysql_connection()
     cursor = conn.cursor(dictionary=True)
@@ -37,21 +33,6 @@ def get_resume_json_by_resume_id(resume_id):
             return None
     return None
 
-
-    #     SELECT 
-    #         r.resume_name,
-    #         j.job_name,
-    #         ra.overall_score,
-    #         ra.analysis_time,
-    #         ra.json_analysis_result,
-    #         ra.status
-    #     FROM resume_analysis ra
-    #     LEFT JOIN resumes r ON ra.resume_id = r.id
-    #     LEFT JOIN jobs j ON ra.job_id = j.id
-    #     WHERE ra.phonenumber = %s
-    #     ORDER BY ra.analysis_time DESC
-    # """, (phonenumber,))
-# resume_anaops_mysql.py 中添加
 def get_analy_json_by_analysis_id(analysis_id):
     conn = get_mysql_connection()
     cursor = conn.cursor(dictionary=True)
@@ -139,8 +120,6 @@ def insert_analysis(phonenumber, resume_id, job_id, overall_score, analysis_summ
     conn.close()
     return inserted_id
 
-
-# ✅ 修改后的 save_analysis_result 函数
 def save_analysis_result(phonenumber, resume_id, job_id, overall_score, analysis_summary, json_analysis_result, status):
     conn = get_mysql_connection()
     cursor = conn.cursor()
@@ -163,7 +142,6 @@ def save_analysis_result(phonenumber, resume_id, job_id, overall_score, analysis
     conn.close()
     return analysis_id
 
-# 保持不变
 def save_score_detail(analysis_id, job_name, score_dict):
     conn = get_mysql_connection()
     cursor = conn.cursor()

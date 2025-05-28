@@ -46,12 +46,12 @@ def get_resume_analysis_by_number(phonenumber):
 def get_jobs_summary():
     conn = get_mysql_connection()
     c = conn.cursor()
-    # 职位分类统计
+
     c.execute("""
         SELECT job_category, COUNT(*) FROM jobs GROUP BY job_category
     """)
     job_cat_count = c.fetchall()
-    # 职位总数
+
     c.execute("SELECT COUNT(*) FROM jobs")
     total_jobs = c.fetchone()[0]
     c.close()

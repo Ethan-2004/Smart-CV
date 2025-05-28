@@ -29,7 +29,7 @@ def parse_model_output(raw_str: str) -> dict:
 def hr_insights_page(phonenumber):
   st.title("🚀 HR 智能洞察")
 
-  # 1. 先让用户选手机号下的分析记录
+
   ph =  phonenumber
   if not ph:
       st.warning("请先登录。")
@@ -58,7 +58,7 @@ def hr_insights_page(phonenumber):
   analysis_id = int(selected_option.split(" ")[0].split(":")[1])
   analy_json = get_analy_json_by_analysis_id(analysis_id)
   job_name = analy_json["job_name"]
-  # 构造选项：ID - 时间 - 分数
+
   options = [
       f"ID:{r[0]}  时间:{r[2].strftime('%Y-%m-%d %H:%M')}  分数:{r[1]}"
       for r in analyses
@@ -70,7 +70,7 @@ def hr_insights_page(phonenumber):
   api_name = cfg["model_name"]
   # st.write(cfg)
   
-  # ── Tab 1: 绩效评估 ──
+
   tab1, tab2, tab3 = st.tabs(["📈 绩效评估", "🎯 培训推荐", "❤️ 满意度预测"])
   prompt_template1 = """你是一个企业人力绩效分析专家。请根据以下内容评估员工本次的工作绩效情况。
 
@@ -197,10 +197,8 @@ def hr_insights_page(phonenumber):
           df2["risk_score"] = df2["risk_level"].map(risk_map)
           df2["created_at"] = pd.to_datetime(df2["created_at"])
 
-          # 展示数据表
           st.dataframe(df2[["created_at", "risk_level", "details"]])
 
-          # 折线图展示风险等级趋势
           st.markdown("#### 📈 风险等级趋势图")
           chart_data = df2[["created_at", "risk_score"]].set_index("created_at").sort_index()
           st.line_chart(chart_data)
@@ -208,7 +206,6 @@ def hr_insights_page(phonenumber):
       else:
           st.info("暂无预测数据。")
 
-      # 生成预测按钮
       if st.button("生成离职风险预测"):
           prompt = prompt_template3.format(
               analysis_id=analysis_id,

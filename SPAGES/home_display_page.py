@@ -13,10 +13,10 @@ def display_homepage():
     load_css("./styles/home.css")
 
     # st.markdown('<div class="glass-card">', unsafe_allow_html=True)
-    st.title('🎉 欢迎来到智能简历优化平台')
+    st.title('🎉 欢迎来到智能HR平台')
     st.markdown("""
         <div class="light-green-text">
-        本平台致力于通过AI技术帮助你更高效地提升简历质量，实现更优的岗位匹配与推荐。
+        人工智能HR平台，精准洞察人才，高效驱动企业未来。
         </div>
         """, unsafe_allow_html=True)
 
@@ -42,9 +42,8 @@ def display_homepage():
         
         🎯 标签与关键词标注<br>
         
-        🧠 AI辅助内容优化与建议<br>
+        🧠 AI辅助人力资源管理<br>
         
-        📊 历史记录与趋势追踪
         
         </div>
         """, unsafe_allow_html=True)

@@ -57,10 +57,9 @@ class ResumeProcessor:
                 api_key=api_key,
                 api_name=api_name,
             )
-            # 解析模型返回，保证是dict
             structured_resume = parse_model_output(response)
-            print("structured_resume:", repr(structured_resume))
-            print("structured_resume:", type(structured_resume))
+            # print("structured_resume:", repr(structured_resume))
+            # print("structured_resume:", type(structured_resume))
 
             if not isinstance(structured_resume, dict):
                 raise ValueError("模型返回的结构化简历不是字典格式")
@@ -77,7 +76,6 @@ class ResumeProcessor:
                 api_key=api_key,
                 api_name=api_name,
             )
-            # 解析模型返回，保证是dict
             structured_jobrequiremnets = parse_model_output(response)
             if not isinstance(structured_jobrequiremnets, dict):
                 raise ValueError("模型返回的结构化简历不是字典格式")
@@ -116,13 +114,13 @@ class ResumeProcessor:
         score = {
             "education_score": 0,
             "skills_score": 0,
-            "experience_score": 80,  # 默认经验分数
+            "experience_score": 80,  
             "certifications_score": 0,
             "personal_qualities_score": 0,
         }
         # print(job_requirements)
 
-        # 教育评分
+
         education_levels = ["高中", "大专", "本科", "硕士", "博士"]
         try:
             edu_index_resume = education_levels.index(structured_resume.get("education", ""))
@@ -131,7 +129,6 @@ class ResumeProcessor:
         except Exception:
             score["education_score"] = 50
 
-        # 技能、证书、品质评分
         def calc_match_score(required, provided):
             if not required:
                 return 0
@@ -169,7 +166,6 @@ class ResumeProcessor:
         font = FontProperties(fname=r"C:\Windows\Fonts\simhei.ttf", size=12)
         plt.rcParams['font.family'] = font.get_name()
 
-        # 如果有负号显示问题，设置如下
         plt.rcParams['axes.unicode_minus'] = False
 
         score = int(sum(score_dict.values()) / len(score_dict))
@@ -177,7 +173,7 @@ class ResumeProcessor:
         analysis_id = insert_analysis(
             self.phonenumber,
             resume_id,
-            job_id=job_id,  # job_id，确保不是 None
+            job_id=job_id,  
             overall_score = score,
             analysis_summary=outcome,
             json_analysis_result=json_analysis_result,

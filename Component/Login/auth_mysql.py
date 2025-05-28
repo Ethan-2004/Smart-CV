@@ -5,7 +5,6 @@ import os
 from streamlit_cookies_manager import EncryptedCookieManager
 from datetime import datetime
 
-# 初始化 Cookie 管理器
 cookies = EncryptedCookieManager(
     prefix="app_auth/",
     password=os.environ.get("COOKIE_SECRET", "super_secret_cookie_password")
@@ -14,7 +13,6 @@ cookies = EncryptedCookieManager(
 if not cookies.ready():
     st.stop()
 
-# MySQL 配置
 from oputils.db_config import DB_CONFIG
 
 def get_mysql_connection():
@@ -106,11 +104,10 @@ def auto_login():
 def logout():
     st.sidebar.markdown("---")
     if st.sidebar.button("退出登录", use_container_width=True):
-        # 删除当前会话中所有的 Cookie
+
         cookies.clear()
         cookies.save()
 
-        # 清空 session_state 中的登录信息
         st.session_state.logged_in = False
         st.session_state.user_info = {}
         st.success("您已退出登录")

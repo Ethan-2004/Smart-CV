@@ -8,7 +8,7 @@ import random
 def job_manager_page():
     st.subheader("🗂 职位管理")
 
-    # 初始化 session state
+
     if "job_imported" not in st.session_state:
         st.session_state.job_imported = False
     if "uploader_key" not in st.session_state:
@@ -17,7 +17,6 @@ def job_manager_page():
         st.session_state.show_delete_confirm = False
 
 
-    # 📦 JSON导入导出
     with st.expander("📁 JSON导入/导出", expanded=False):
         col1, col2 = st.columns([1, 1])
 
@@ -48,7 +47,7 @@ def job_manager_page():
                             st.warning("未导入任何职位，请检查文件内容是否正确。")
 
                         st.session_state.job_imported = True
-                        st.session_state.uploader_key = str(random.randint(1000, 9999))  # 触发 file_uploader 重置
+                        st.session_state.uploader_key = str(random.randint(1000, 9999)) 
                         st.rerun()
 
                 except Exception as e:
@@ -71,7 +70,6 @@ def job_manager_page():
 
     st.write("\t")
 
-    # ➕ 新增职位表单
     with st.expander("➕ 新增职位", expanded=False):
         with st.form("add_job_form"):
             new_name = st.text_input("职位名称", max_chars=50)
@@ -96,10 +94,10 @@ def job_manager_page():
 
     s1,s2=st.columns([2,1])
     with s1:
-        # 🔍 模糊搜索框（默认显示全部）
+
         search_keyword = st.text_input("🔍 搜索职位（名称或类别，留空显示全部）", "")
 
-        # 🔍 过滤结果
+
         if search_keyword.strip():
             jobs = [
                 job for job in jobs
@@ -108,11 +106,11 @@ def job_manager_page():
             if not jobs:
                 st.warning("未找到匹配的职位。")
     with s2:          
-        # 一键删除所有职位按钮及确认
+
         st.write("\t")
         _ , col_del = st.columns([1, 1])
         with col_del:
-            # 用 st.button 加 tooltip (simulated by st.markdown + hover style)
+        
             delete_button = st.button("🗑️ 一键删除", help="⚠️ 点击后会删除数据库所有职位，操作不可恢复，请谨慎！")
 
         if delete_button:
@@ -120,7 +118,7 @@ def job_manager_page():
                 co.delete_all_jobs()
                 st.success("✅ 所有职位已被删除！")
                 st.session_state.show_delete_confirm = False
-                # 刷新页面
+                
                 st.rerun()
             except Exception as e:
                 st.error(f"删除失败: {e}")
@@ -129,7 +127,6 @@ def job_manager_page():
 
 
     st.write("---")
-    # ⬇️ 展示每一个职位
     for job in jobs:
         id, job_name, job_category, job_description, created_at = job
         with st.container():

@@ -14,7 +14,6 @@ def myinfo_page(phonenumber,username):
 
     st.header(f"欢迎，{username}！")
 
-    # 1. 展示简历列表
     resumes = co.get_user_resumes(phonenumber)
     if resumes:
         st.subheader("📄 你的简历列表")
@@ -23,7 +22,6 @@ def myinfo_page(phonenumber,username):
     else:
         st.info("你还没有上传任何简历。")
 
-    # 2. 简历分析分数统计及图表
     analysis = co.get_resume_analysis_by_number(phonenumber)
 
     if analysis:
@@ -36,8 +34,6 @@ def myinfo_page(phonenumber,username):
 
         st.dataframe(df_analysis)
 
-
-        # 分数分布图
         import matplotlib.pyplot as plt
         plt.rcParams['font.sans-serif'] = ['SimHei']  # 设置中文字体为黑体
         plt.rcParams['axes.unicode_minus'] = False   
@@ -49,7 +45,6 @@ def myinfo_page(phonenumber,username):
         plt.ylabel("频数")
         st.pyplot(plt)
 
-        # 最近一次分析结果
         latest = df_analysis.sort_values(by="分析时间", ascending=False).iloc[0]
         st.markdown(f"**最近一次分析时间:** {latest['分析时间']}")
         st.markdown(f"**分析分数:** {latest['分数']}")
@@ -57,7 +52,6 @@ def myinfo_page(phonenumber,username):
     else:
         st.info("暂无简历分析数据。")
 
-    # 3. 职位分类统计图表
     st.write("---")
     st.subheader("💼 职位分类统计")
     page1,page2=st.columns([1,1])
@@ -73,7 +67,7 @@ def myinfo_page(phonenumber,username):
             st.info("暂无职位数据。")
     with page2:
         import matplotlib.pyplot as plt
-        plt.rcParams['font.sans-serif'] = ['SimHei']  # 设置中文字体为黑体
+        plt.rcParams['font.sans-serif'] = ['SimHei']  
         plt.rcParams['axes.unicode_minus'] = False   
 
         plt.figure(figsize=(8,5))
